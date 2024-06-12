@@ -1,0 +1,123 @@
+import random
+
+def mostrar_menu():
+    print("Hola, bienvenido al juego del gato")
+    print("Menú:")
+    print("a. Nueva partida (Jugador 1 vs Computadora)")
+    print("b. Vs (P1 vs P2)")
+    print("c. Salir")
+
+def imprimir_tablero(tablero):
+    for fila in tablero:
+        print(" | ".join(fila))
+        print("-" * 9)
+
+def verificar_ganador(tablero, jugador):
+    for fila in tablero:
+        if all(casilla == jugador for casilla in fila):
+            return True
+           
+    for columna in range(3):
+        if all(tablero[fila][columna] == jugador for fila in range(3)):
+            return True
+
+    if all(tablero[i][i] == jugador for i in range(3)) or all(tablero[i][2-i] == jugador for i in range(3)):
+        return True
+    return False
+
+def jugar_gato():
+    tablero = [[" "]*3 for _ in range(3)]
+    jugador = " X "
+    jugadas = 0
+   
+    while jugadas < 9:
+        imprimir_tablero(tablero)
+        fila = int(input("Ingrese la fila (1-3): ")) - 1
+        columna = int(input("Ingrese la columna (1-3): ")) - 1
+       
+        if tablero[fila][columna] == " ":
+            tablero[fila][columna] = jugador
+            if verificar_ganador(tablero, jugador):
+                print("El jugador", jugador, "ha ganado.")
+                break
+           
+            jugador = "0" if jugador == " X " else " X "
+            jugadas += 1
+           
+        else:
+            print("Esa casilla ya está ocupada, elige otra por favor.")
+           
+    if jugadas == 9:
+        print("Es un empate.")
+
+def jugar_contra_computadora():
+    tablero = [[" "]*3 for _ in range(3)]
+    jugador = " X "
+    jugadas = 0
+   
+    while jugadas < 9:
+        imprimir_tablero(tablero)
+       
+        if jugador == " X ":
+            fila = int(input("Ingrese la fila (1-3): ")) - 1
+            columna = int(input("Ingrese la columna (1-3): ")) - 1
+        else:
+            fila = random.randint(0, 2)
+            columna = random.randint(0, 2)
+       
+        if tablero[fila][columna] == " ":
+            tablero[fila][columna] = jugador
+            if verificar_ganador(tablero, jugador):
+                print("El jugador", jugador, "ha ganado.")
+                break
+           
+            jugador = "0" if jugador == " X " else " X "
+            jugadas += 1
+           
+        else:
+            print("Esa casilla ya está ocupada, elige otra por favor.")
+           
+    if jugadas == 9:
+        print("Es un empate.")
+
+def jugar_versus():
+    tablero = [[" "]*3 for _ in range(3)]
+    jugador = " X "
+    jugadas = 0
+   
+    while jugadas < 9:
+        imprimir_tablero(tablero)
+        fila = int(input("Ingrese la fila (1-3): ")) - 1
+        columna = int(input("Ingrese la columna (1-3): ")) - 1
+       
+        if tablero[fila][columna] == " ":
+            tablero[fila][columna] = jugador
+            if verificar_ganador(tablero, jugador):
+                print("El jugador", jugador, "ha ganado.")
+                break
+           
+            jugador = "0" if jugador == " X " else " X "
+            jugadas += 1
+           
+        else:
+            print("Esa casilla ya está ocupada, elige otra por favor.")
+           
+    if jugadas == 9:
+        print("Es un empate.")
+
+def main():
+    while True:
+        mostrar_menu()
+        opcion = input("Elige una opción: ")
+        if opcion == "a":
+            jugar_contra_computadora()
+        elif opcion == "b":
+            jugar_versus()
+        elif opcion == "c":
+            print("Salir del menú.")
+            break
+        else:
+            print("Opción no válida, elige otra opción.")
+
+if __name__ == "__main__":
+    main()
